@@ -499,11 +499,10 @@ footer {
 }
 
 .inline-photo {
-  display: inline-block;
+  display: block;
   width: 260px;
   max-width: 58%;
-  margin: 0.55rem 0 0 0.9rem;
-  vertical-align: top;
+  margin: 0.75rem 0 0;
 }
 
 .inline-photo img {
