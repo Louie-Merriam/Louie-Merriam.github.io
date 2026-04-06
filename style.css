@@ -162,6 +162,10 @@ nav a.active {
   max-width: 46rem;
 }
 
+.projects-content {
+  max-width: none;
+}
+
 .main-content p {
   margin-bottom: 1.2em;
 }
@@ -266,6 +270,22 @@ nav a.active {
   border: none;
   border-radius: 0;
   background: transparent;
+}
+
+.projects-content .card-has-img {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.projects-content .card-image-wrap {
+  width: 180px;
+}
+
+.projects-content .card-img {
+  width: 180px;
+  aspect-ratio: 4 / 3;
 }
 
 .feature-figure {
@@ -546,8 +566,18 @@ footer {
     gap: 14px;
   }
 
+  .projects-content .card-has-img {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .card-image-wrap {
     flex: none;
+    width: 100%;
+  }
+
+  .projects-content .card-image-wrap,
+  .projects-content .card-img {
     width: 100%;
   }
 
