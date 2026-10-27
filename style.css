@@ -10,14 +10,38 @@
 }
 
 :root {
-  --accent:    #234d6b;
-  --accent-lt: #234d6b;
+  /* --- Colors ---
+       --accent  : links            --nav     : the page links in the top bar
+       --heading : site title, section headers, project and paper titles
+       --text    : body text        --muted   : dates, tags, captions, metadata
+       --bg      : page background  --border  : hairlines between entries
+  */
+  --accent:    #a83838;
+  --accent-lt: #a83838;
+  --nav:       #a83838;
+  --heading:   #2f2828;
   --text:      #181a1d;
   --muted:     #5d6670;
   --border:    #dde3e8;
   --bg:        #ffffff;
   --sidebar-w: 170px;
+  --col-gap:   34px;
   --max-w:     880px;
+
+  /* --- Type ---
+     Every font on the site comes from these two variables, so this is the
+     only place to edit when trying a new typeface.
+       --font-body : paragraphs, project blurbs, CV details (was Georgia)
+       --font-ui   : site title, nav, headings, captions, metadata
+     A few alternatives to paste into --font-body:
+       Georgia, 'Times New Roman', Times, serif                       (the original)
+       Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif    (system serif, no download)
+       'Source Serif 4', Georgia, serif                              (needs the Google Fonts <link> in each page's <head>)
+       'Literata', Georgia, serif                                    (needs the Google Fonts <link>)
+       Inter, system-ui, sans-serif                                  (needs the Google Fonts <link>)
+  */
+  --font-ui:   'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: var(--font-ui);
 }
 
 html {
@@ -26,7 +50,7 @@ html {
 }
 
 body {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: var(--font-body);
   color: var(--text);
   background: var(--bg);
   line-height: 1.65;
@@ -61,11 +85,11 @@ header {
 }
 
 .site-title {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: var(--font-ui);
   font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--heading);
   margin-bottom: 0;
 }
 
@@ -81,32 +105,81 @@ nav {
 }
 
 nav a {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.84rem;
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--muted);
+  color: var(--nav);
   padding-bottom: 0;
   border-bottom: none;
   transition: color 0.15s ease;
 }
 
 nav a:hover {
-  color: var(--text);
+  color: var(--nav);
   text-decoration: underline;
 }
 
 nav a.active {
-  color: var(--text);
+  color: var(--nav);
   font-weight: 600;
+}
+
+/* Indus signs standing in for letters of the menu items (sign-h is the
+   sign used for "h", and so on). The shapes are SVG files in assets/signs/,
+   used as masks so they take the link's color (hover, active, and --nav all
+   apply). Each item also carries aria-label with the full word for screen
+   readers. */
+nav .sign {
+  display: inline-block;
+  height: 1.12em;
+  vertical-align: -0.2em;
+  margin: 0 0.06em 0 0.02em;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+nav .sign-h {
+  width: 0.8em;
+  -webkit-mask-image: url(assets/signs/h.svg);
+  mask-image: url(assets/signs/h.svg);
+}
+
+nav .sign-p {
+  width: 0.89em;
+  -webkit-mask-image: url(assets/signs/p.svg);
+  mask-image: url(assets/signs/p.svg);
+}
+
+nav .sign-u {
+  width: 0.76em;
+  -webkit-mask-image: url(assets/signs/u.svg);
+  mask-image: url(assets/signs/u.svg);
+}
+
+nav .sign-b {
+  width: 0.51em;
+  -webkit-mask-image: url(assets/signs/b.svg);
+  mask-image: url(assets/signs/b.svg);
+}
+
+nav .sign-a {
+  width: 0.84em;
+  -webkit-mask-image: url(assets/signs/a.svg);
+  mask-image: url(assets/signs/a.svg);
 }
 
 /* --- Main layout --- */
 .page-body {
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
-  gap: 34px;
+  gap: var(--col-gap);
   padding: 30px 0 56px;
 }
 
@@ -121,22 +194,24 @@ nav a.active {
 }
 
 .sidebar .name {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 10px;
-  color: var(--text);
+  color: var(--heading);
 }
 
 .sidebar .contact {
   font-size: 0.8rem;
   color: var(--muted);
   line-height: 1.7;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
 }
 
-.sidebar .contact a {
-  color: var(--accent);
+/* Email addresses read as plain text (they still work as links). */
+.sidebar .contact a,
+a[href^="mailto:"] {
+  color: inherit;
 }
 
 .sidebar-links {
@@ -147,7 +222,7 @@ nav a.active {
 }
 
 .sidebar-links a {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.8rem;
   color: var(--accent);
 }
@@ -176,13 +251,13 @@ nav a.active {
 
 /* --- Section headers --- */
 .section-header {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.08rem;
   font-weight: 600;
   margin: 2.2em 0 0.75em;
   padding-bottom: 0;
   border-bottom: none;
-  color: var(--text);
+  color: var(--heading);
   clear: both;
 }
 
@@ -215,11 +290,11 @@ nav a.active {
 }
 
 .card-title {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.2em;
-  color: var(--text);
+  color: var(--heading);
 }
 
 .card-title a {
@@ -232,7 +307,7 @@ nav a.active {
 }
 
 .card-meta {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.78rem;
   color: var(--muted);
   margin-bottom: 0.45em;
@@ -260,6 +335,60 @@ nav a.active {
 
 .card-image-wrap {
   flex: 0 0 150px;
+}
+
+.card-image-wrap a {
+  display: block;
+}
+
+/* On two-column pages (home), a card's image hangs in the sidebar column
+   beside its text instead of taking space inside the text column. The image
+   is cropped to the height of the text: top edge on the title's cap line,
+   bottom edge on the last line of the description. */
+.page-body:not(.single-col) .main-content .card-has-img {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: var(--col-gap);
+  align-items: stretch;
+  margin-left: calc(-1 * (var(--sidebar-w) + var(--col-gap)));
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.page-body:not(.single-col) .main-content .card-has-img .card-image-wrap {
+  flex: none;
+  width: var(--sidebar-w);
+  position: relative;                       /* the image fills this box, so the row's
+                                               height comes from the text alone */
+  min-height: 0;
+  margin-top: 0.38rem;                      /* down to the title's cap line */
+  margin-bottom: calc(1.8em + 0.3rem);      /* past the body's padding, up to the last baseline */
+}
+
+.page-body:not(.single-col) .main-content .card-has-img:last-child .card-image-wrap {
+  margin-bottom: 0.3rem;
+}
+
+.page-body:not(.single-col) .main-content .card-has-img .card-image-wrap a {
+  position: absolute;
+  inset: 0;
+}
+
+.page-body:not(.single-col) .main-content .card-has-img .card-img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.page-body:not(.single-col) .main-content .card-has-img .card-body {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.8em;
+}
+
+.page-body:not(.single-col) .main-content .card-has-img:last-child .card-body {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .card-img {
@@ -306,7 +435,7 @@ nav a.active {
 
 .feature-figure figcaption {
   margin-top: 0.45rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.74rem;
   line-height: 1.45;
   color: var(--muted);
@@ -319,7 +448,7 @@ nav a.active {
 }
 
 .feature-figure-wide {
-  max-width: 460px;
+  max-width: 430px;
   margin: 1rem 0 1.35rem;
 }
 
@@ -327,6 +456,13 @@ nav a.active {
   aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: center;
+}
+
+/* A figure that opens a page (e.g. the photo at the top of the home page)
+   sits flush with the top of the column. */
+.main-content > .feature-figure:first-child {
+  margin-top: 0;
+  margin-bottom: 1.6rem;
 }
 
 /* --- Blog post page --- */
@@ -337,15 +473,16 @@ nav a.active {
 }
 
 .post-title {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.7rem;
   font-weight: 700;
   line-height: 1.25;
   margin-bottom: 0.4em;
+  color: var(--heading);
 }
 
 .post-meta {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.82rem;
   color: var(--muted);
 }
@@ -355,7 +492,7 @@ nav a.active {
 }
 
 .post-body h2 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.15rem;
   font-weight: 700;
   margin: 2em 0 0.6em;
@@ -364,7 +501,7 @@ nav a.active {
 /* --- Tag pills --- */
 .tag {
   display: inline-block;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.76rem;
   font-weight: 400;
   letter-spacing: 0;
@@ -378,7 +515,7 @@ nav a.active {
 
 /* --- Back link --- */
 .back-link {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.82rem;
   color: var(--muted);
   display: inline-block;
@@ -407,10 +544,10 @@ nav a.active {
 }
 
 .pub-title {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text);
+  color: var(--heading);
   margin-bottom: 0.25em;
   line-height: 1.4;
 }
@@ -418,7 +555,7 @@ nav a.active {
 .pub-meta {
   font-size: 0.84rem;
   color: var(--muted);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
 }
 
 .pub-note {
@@ -430,7 +567,7 @@ nav a.active {
 
 .pub-status {
   display: inline-block;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0;
@@ -451,9 +588,14 @@ nav a.active {
   color: var(--muted);
 }
 
+.pub-status.accepted {
+  background: transparent;
+  color: var(--muted);
+}
+
 /* --- Section subheader --- */
 .section-subheader {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.07em;
@@ -474,14 +616,14 @@ nav a.active {
 }
 
 .cv-where {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.95rem;
   color: var(--text);
   margin-bottom: 0.15em;
 }
 
 .cv-when {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.78rem;
   color: var(--muted);
   margin-bottom: 0.4em;
@@ -513,7 +655,7 @@ nav a.active {
 footer {
   border-top: 1px solid var(--border);
   padding: 16px 0 20px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.78rem;
   color: #7d8791;
 }
@@ -534,7 +676,7 @@ footer {
 .inline-photo-caption {
   display: block;
   margin-top: 0.35rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.72rem;
   line-height: 1.4;
   color: var(--muted);
@@ -564,6 +706,27 @@ footer {
   .card-has-img {
     flex-direction: column;
     gap: 14px;
+  }
+
+  .page-body:not(.single-col) .main-content .card-has-img {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-left: 0;
+  }
+
+  .page-body:not(.single-col) .main-content .card-has-img .card-image-wrap {
+    width: 100%;
+    margin: 0;
+    position: static;
+  }
+
+  .page-body:not(.single-col) .main-content .card-has-img .card-image-wrap a {
+    position: static;
+  }
+
+  .page-body:not(.single-col) .main-content .card-has-img .card-img {
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   .projects-content .card-has-img {
