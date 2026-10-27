@@ -381,6 +381,14 @@ a[href^="mailto:"] {
   object-fit: cover;
 }
 
+/* Images that must never be cropped (diagrams, figures with labels, the
+   Georgetown map): fit inside the box instead, hanging from its top edge. */
+.card-img.fit,
+.page-body:not(.single-col) .main-content .card-has-img .card-img.fit {
+  object-fit: contain;
+  object-position: 50% 0;
+}
+
 .page-body:not(.single-col) .main-content .card-has-img .card-body {
   border-bottom: 1px solid var(--border);
   padding-bottom: 1.8em;
